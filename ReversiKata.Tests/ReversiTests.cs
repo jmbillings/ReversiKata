@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
 using NUnit.Framework;
 
 namespace ReversiKata.Tests
@@ -27,6 +25,23 @@ namespace ReversiKata.Tests
                         Assert.AreEqual(CellState.Empty, reversiBoard.m_Cells[rowIndex, colIndex]);
                 }     
             }
+        }
+
+        [Test]
+        [TestCaseSource(typeof(ReversiTestCaseGenerator), "GetTenRandomGridCoordinates")]
+        public void AWhitePieceCanBeplacedToTheRightOfAWhiteBlackPairButNotToTheLeft(ReversiGridCoordinate coordinate)
+        {
+            //setup
+            var reversiBoard = new ReversiBoard(false);
+            reversiBoard.m_Cells[coordinate.RowIndex, coordinate.ColumnIndex] = CellState.White;
+            reversiBoard.m_Cells[coordinate.RowIndex + 1, coordinate.ColumnIndex] = CellState.Black;
+
+            //act
+            var validMoves = reversiBoard.GetValidMoves(ConsoleColor.White);
+            
+            //assert
+            Assert.That(validMoves.Count == 1, "Expected one valid move to be returned for position {0},{1}, but found {2}", 
+                coordinate.RowIndex, coordinate.ColumnIndex, validMoves.Count);
         }
     }
 }
