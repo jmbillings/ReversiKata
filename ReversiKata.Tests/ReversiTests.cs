@@ -45,5 +45,24 @@ namespace ReversiKata.Tests
 
             Assert.That(validMoves[0].RowIndex == coordinate.RowIndex && validMoves[0].ColumnIndex == coordinate.ColumnIndex + 2);
         }
+
+        [Test]
+        [TestCaseSource(typeof(ReversiTestCaseGenerator), nameof(ReversiTestCaseGenerator.GetTenRandomGridCoordinates))]
+        public void ABlackPieceCanBeplacedToTheRightOfABlackWhitePairButNotToTheLeft(ReversiGridCoordinate coordinate)
+        {
+            //setup
+            var reversiBoard = new ReversiBoard(false);
+            reversiBoard.m_Cells[coordinate.RowIndex, coordinate.ColumnIndex] = CellState.Black;
+            reversiBoard.m_Cells[coordinate.RowIndex, coordinate.ColumnIndex + 1] = CellState.White;
+
+            //act
+            var validMoves = reversiBoard.GetValidMoves(ConsoleColor.Black);
+
+            //assert
+            Assert.That(validMoves.Count == 1, "Expected one valid move to be returned for position {0},{1}, but found {2}",
+                coordinate.RowIndex, coordinate.ColumnIndex, validMoves.Count);
+
+            Assert.That(validMoves[0].RowIndex == coordinate.RowIndex && validMoves[0].ColumnIndex == coordinate.ColumnIndex + 2);
+        }
     }
 }
