@@ -42,6 +42,8 @@ namespace ReversiKata.Tests
             //assert
             Assert.That(validMoves.Count == 1, "Expected one valid move to be returned for position {0},{1}, but found {2}", 
                 coordinate.RowIndex, coordinate.ColumnIndex, validMoves.Count);
+
+            Assert.That(validMoves[0].RowIndex == coordinate.RowIndex && validMoves[0].ColumnIndex == coordinate.ColumnIndex + 2);
         }
     }
 }
