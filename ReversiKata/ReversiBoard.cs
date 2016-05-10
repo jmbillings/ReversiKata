@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReversiKata
 {
@@ -10,10 +7,16 @@ namespace ReversiKata
     {
         public CellState[,] m_Cells;
 
-        public ReversiBoard()
+        public ReversiBoard(bool placeDefaultPieces = true)
         {
             m_Cells = new CellState[8, 8];
-            PopulateDefaultGame();
+            if (placeDefaultPieces)
+                PopulateDefaultGame();
+        }
+
+        public List<ReversiGridCoordinate> GetValidMoves(ConsoleColor color)
+        {
+            return new List<ReversiGridCoordinate>();
         }
 
         private void PopulateDefaultGame()
