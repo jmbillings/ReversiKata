@@ -28,7 +28,7 @@ namespace ReversiKata.Tests
         }
 
         [Test]
-        [TestCaseSource(typeof(ReversiTestCaseGenerator), "GetTenRandomGridCoordinates")]
+        [TestCaseSource(typeof(ReversiTestCaseGenerator), nameof(ReversiTestCaseGenerator.GetTenRandomGridCoordinates))]
         public void AWhitePieceCanBeplacedToTheRightOfAWhiteBlackPairButNotToTheLeft(ReversiGridCoordinate coordinate)
         {
             //setup
