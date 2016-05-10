@@ -34,7 +34,7 @@ namespace ReversiKata.Tests
             //setup
             var reversiBoard = new ReversiBoard(false);
             reversiBoard.m_Cells[coordinate.RowIndex, coordinate.ColumnIndex] = CellState.White;
-            reversiBoard.m_Cells[coordinate.RowIndex + 1, coordinate.ColumnIndex] = CellState.Black;
+            reversiBoard.m_Cells[coordinate.RowIndex, coordinate.ColumnIndex + 1] = CellState.Black;
 
             //act
             var validMoves = reversiBoard.GetValidMoves(ConsoleColor.White);
