@@ -16,7 +16,30 @@ namespace ReversiKata
 
         public List<ReversiGridCoordinate> GetValidMoves(ConsoleColor color)
         {
-            return new List<ReversiGridCoordinate>();
+            var lastWhiteColumnIndex = 0;
+            var lastBlackColumnIndex = 0;
+            var validMoveCoordinates = new List<ReversiGridCoordinate>();
+            for (var rowIndex = 0; rowIndex < 8; rowIndex++)
+            {
+                for (var colIndex = 0; colIndex < 8; colIndex++)
+                {
+                    if (m_Cells[rowIndex, colIndex] == CellState.Black)
+                    {
+                        lastBlackColumnIndex = colIndex;
+                        if ((lastWhiteColumnIndex == colIndex - 1) && (color == ConsoleColor.White))
+                            validMoveCoordinates.Add(new ReversiGridCoordinate(rowIndex, colIndex + 1));
+                    }
+
+                    if (m_Cells[rowIndex, colIndex] == CellState.White)
+                    {
+                        lastWhiteColumnIndex = colIndex;
+                        if ((lastBlackColumnIndex == colIndex - 1) && (color == ConsoleColor.Black))
+                            validMoveCoordinates.Add(new ReversiGridCoordinate(rowIndex, colIndex + 1));
+                    }
+                }
+            }
+
+            return validMoveCoordinates;
         }
 
         private void PopulateDefaultGame()
