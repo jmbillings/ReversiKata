@@ -16,8 +16,8 @@ namespace ReversiKata
 
         public List<ReversiGridCoordinate> GetValidMoves(ConsoleColor color)
         {
-            var lastWhiteColumnIndex = 0;
-            var lastBlackColumnIndex = 0;
+            var lastWhiteColumnIndex = 99;
+            var lastBlackColumnIndex = 99;
             var validMoveCoordinates = new List<ReversiGridCoordinate>();
             for (var rowIndex = 0; rowIndex < 8; rowIndex++)
             {
@@ -26,15 +26,25 @@ namespace ReversiKata
                     if (m_Cells[rowIndex, colIndex] == CellState.Black)
                     {
                         lastBlackColumnIndex = colIndex;
-                        if ((lastWhiteColumnIndex == colIndex - 1) && (color == ConsoleColor.White))
-                            validMoveCoordinates.Add(new ReversiGridCoordinate(rowIndex, colIndex + 1));
+                        if ((lastWhiteColumnIndex == colIndex - 1))
+                        {
+                            if (color == ConsoleColor.White)
+                                validMoveCoordinates.Add(new ReversiGridCoordinate(rowIndex, colIndex + 1));
+                            else if (color == ConsoleColor.Black)
+                                validMoveCoordinates.Add(new ReversiGridCoordinate(rowIndex, colIndex - 2));
+                        }
                     }
 
                     if (m_Cells[rowIndex, colIndex] == CellState.White)
                     {
                         lastWhiteColumnIndex = colIndex;
-                        if ((lastBlackColumnIndex == colIndex - 1) && (color == ConsoleColor.Black))
-                            validMoveCoordinates.Add(new ReversiGridCoordinate(rowIndex, colIndex + 1));
+                        if (lastBlackColumnIndex == colIndex - 1)
+                        {
+                            if (color == ConsoleColor.Black)
+                                validMoveCoordinates.Add(new ReversiGridCoordinate(rowIndex, colIndex + 1));
+                            else if (color == ConsoleColor.White)
+                                validMoveCoordinates.Add(new ReversiGridCoordinate(rowIndex, colIndex - 2));
+                        }
                     }
                 }
             }
