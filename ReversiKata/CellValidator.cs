@@ -12,7 +12,7 @@ namespace ReversiKata
             m_Grid = reversiGrid;
             var coordinate = new ReversiGridCoordinate(rowIndex, colIndex);
 
-            if ((IsCellValidHorizontally(coordinate, color)) || (IsCellValidVertically(coordinate, color)) || (IsCellValidDiagnoally(coordinate, color)))
+            if ((IsCellValidHorizontally(coordinate, color)) || (IsCellValidVertically(coordinate, color)) || (IsCellValidDiagonally(coordinate, color)))
                 return true;
 
             return false;
@@ -32,7 +32,7 @@ namespace ReversiKata
             return false;
         }
 
-        private bool IsCellValidDiagnoally(ReversiGridCoordinate coordinate, ConsoleColor color)
+        private bool IsCellValidDiagonally(ReversiGridCoordinate coordinate, ConsoleColor color)
         {
             var northEastCells = CellsToCheck(coordinate, Direction.NorthEast);
             var southEastCells = CellsToCheck(coordinate, Direction.SouthEast);
