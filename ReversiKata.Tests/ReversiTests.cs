@@ -102,5 +102,27 @@ namespace ReversiKata.Tests
 
             Assert.That(validMoves[0].RowIndex == coordinate.RowIndex && validMoves[0].ColumnIndex == coordinate.ColumnIndex);
         }
+
+        [Test]
+        [TestCase(0,1,2)]
+        [TestCase(2,1,6)]
+        [TestCase(7,3,3)]
+        public void AWhitePieceCanBePlacedToTheLeftOfMultipleBlackPiecesWithAWhiteAtTheEnd(int row, int startColumn, int runlength)
+        {
+            //setup
+            var reversiBoard = new ReversiBoard(false);
+            for (var column = startColumn; column < runlength; column++)
+                reversiBoard.m_Cells[row, column] = CellState.Black;
+            reversiBoard.m_Cells[row, startColumn + runlength - 1] = CellState.White;
+
+            //act
+            var validMoves = reversiBoard.GetValidMoves(ConsoleColor.White);
+
+            //assert
+            Assert.That(validMoves.Count == 1, "Expected one valid move to be returned for position {0},{1}, but found {2}",
+                row, startColumn - 1, validMoves.Count);
+
+            Assert.That(validMoves[0].RowIndex == row && validMoves[0].ColumnIndex == startColumn - 1);
+        }
     }
 }
