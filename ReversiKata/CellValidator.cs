@@ -22,6 +22,10 @@ namespace ReversiKata
         {
             var eastCells = CellsToCheck(coordinate, Direction.East);
             var westCells = CellsToCheck(coordinate, Direction.West);
+
+            if (colourSequenceIsValid(eastCells, color) || colourSequenceIsValid(westCells, color))
+                return true;
+
             return false;
         }
 
@@ -29,6 +33,10 @@ namespace ReversiKata
         {
             var northCells = CellsToCheck(coordinate, Direction.North);
             var southCells = CellsToCheck(coordinate, Direction.South);
+
+            if (colourSequenceIsValid(northCells, color) || colourSequenceIsValid(southCells, color))
+                return true;
+
             return false;
         }
 
@@ -38,6 +46,10 @@ namespace ReversiKata
             var southEastCells = CellsToCheck(coordinate, Direction.SouthEast);
             var southWestCells = CellsToCheck(coordinate, Direction.SouthWest);
             var northWestCells = CellsToCheck(coordinate, Direction.NorthWest);
+
+            if (colourSequenceIsValid(northEastCells, color) || colourSequenceIsValid(northWestCells, color) || colourSequenceIsValid(southEastCells, color) || colourSequenceIsValid(southWestCells, color))
+                return true;
+
             return false;
         }
 
@@ -72,15 +84,90 @@ namespace ReversiKata
             }
         }
 
+        /// <summary>
+        /// Move in a straight line for the given direction until the edge of the board is reached, returning a list of cells passed through.
+        /// </summary>
+        /// <param name="startPoint">starting cell</param>
+        /// <param name="rowDirection">direction along rows</param>
+        /// <param name="columnDirection">direction along columns</param>
+        /// <returns></returns>
         private List<ReversiGridCoordinate> CellsToCheck(ReversiGridCoordinate startPoint, int rowDirection, int columnDirection)
         {
             var cellList = new List<ReversiGridCoordinate>();
+            ReversiGridCoordinate workingCell = startPoint;
+            
+            while(true)
+            {
+                workingCell = new ReversiGridCoordinate(workingCell.RowIndex + rowDirection, workingCell.ColumnIndex + columnDirection);
 
-
-
-
+                if (nextCellValid(workingCell.RowIndex, workingCell.ColumnIndex))
+                    cellList.Add(workingCell);
+                else
+                    break;
+            }
 
             return cellList;
+        }
+
+        /// <summary>
+        /// Returns false if the position is off the board edge
+        /// </summary>
+        /// <param name="nextRow">row to check</param>
+        /// <param name="nextColumn">column to check</param>
+        /// <returns></returns>
+        private bool nextCellValid(int nextRow, int nextColumn)
+        {
+            if (nextRow == -1 || nextRow == 8 || nextColumn == -1 || nextColumn == 8)
+                return false;
+            else
+                return true;
+        }
+
+        /// <summary>
+        /// Returns true if there are a valid set of colours from the given cell position. For example:
+        /// Given cell WHITE. Return true if cells are BLACK - BLACK - WHITE
+        /// Return false if cells are WHITE - BLACK - WHITE
+        /// </summary>
+        /// <param name="cells"></param>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        private bool colourSequenceIsValid(List<ReversiGridCoordinate> cells, ConsoleColor color)
+        {
+            if (cells.Count == 0)
+                return false;
+
+            if (color == ConsoleColor.Black)
+            {
+                //next cell must be white
+                if (m_Grid[cells[0].RowIndex, cells[0].ColumnIndex] == CellState.White)
+                {
+                    //loop until we find another black
+                    for (var cell = 1; cell < cells.Count; cell++)
+                    {
+                        if (m_Grid[cells[cell].RowIndex, cells[cell].ColumnIndex] == CellState.Black)
+                        {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+            else
+            {
+                //next cell must be black
+                if (m_Grid[cells[0].RowIndex, cells[0].ColumnIndex] == CellState.Black)
+                {
+                    //loop until we find another white
+                    for (var cell = 1; cell < cells.Count; cell++)
+                    {
+                        if (m_Grid[cells[cell].RowIndex, cells[cell].ColumnIndex] == CellState.White)
+                        {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
         }
     }
 }
