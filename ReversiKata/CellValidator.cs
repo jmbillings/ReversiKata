@@ -12,6 +12,11 @@ namespace ReversiKata
             m_Grid = reversiGrid;
             var coordinate = new ReversiGridCoordinate(rowIndex, colIndex);
 
+            //is cell empty?
+            if (m_Grid[rowIndex, colIndex] != CellState.Empty)
+                return false;
+
+            //is there a valid sequence of cells from this position?
             if ((IsCellValidHorizontally(coordinate, color)) || (IsCellValidVertically(coordinate, color)) || (IsCellValidDiagonally(coordinate, color)))
                 return true;
 
