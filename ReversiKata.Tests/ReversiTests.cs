@@ -190,5 +190,50 @@ namespace ReversiKata.Tests
 
             Assert.That(validMoves[0].ColumnIndex == column && validMoves[0].RowIndex == startRow - 1);
         }
+
+        [Test]
+        [TestCase(1, 1, 2)]
+        [TestCase(2, 1, 4)]
+        [TestCase(4, 3, 3)]
+        public void AWhitePieceCanBePlacedAboveAndToTheLeftOfMultipleBlackPiecesWithAWhiteAtTheEnd(int startColumn, int startRow, int runlength)
+        {
+            //setup
+            var reversiBoard = new ReversiBoard(false);
+            for (var counter = 0; counter < runlength; counter++)
+                reversiBoard.m_Cells[startRow + counter, startColumn + counter] = CellState.Black;
+            reversiBoard.m_Cells[startRow + runlength, startColumn + runlength] = CellState.White;
+
+            //act
+            var validMoves = reversiBoard.GetValidMoves(ConsoleColor.White);
+
+            //assert
+            Assert.That(validMoves.Count == 1, "Expected one valid move to be returned for position {0},{1}, but found {2}",
+                startRow - 1, startColumn - 1, validMoves.Count);
+
+            Assert.That(validMoves[0].ColumnIndex == startColumn - 1 && validMoves[0].RowIndex == startRow - 1);
+        }
+
+        [Test]
+        [TestCase(6, 1, 2)]
+        [TestCase(5, 1, 4)]
+        [TestCase(4, 3, 3)]
+        public void AWhitePieceCanBePlacedAboveAndToTheRightOfMultipleBlackPiecesWithAWhiteAtTheEnd(int startColumn, int startRow, int runlength)
+        {
+            //setup
+            var reversiBoard = new ReversiBoard(false);
+            for (var counter = 0; counter < runlength; counter++)
+                reversiBoard.m_Cells[startRow + counter, startColumn - counter] = CellState.Black;
+            reversiBoard.m_Cells[startRow + runlength, startColumn - runlength] = CellState.White;
+
+            //act
+            var validMoves = reversiBoard.GetValidMoves(ConsoleColor.White);
+
+            //assert
+            Assert.That(validMoves.Count == 1, "Expected one valid move to be returned for position {0},{1}, but found {2}",
+                startRow - 1, startColumn + 1, validMoves.Count);
+
+            Assert.That(validMoves[0].ColumnIndex == startColumn + 1 && validMoves[0].RowIndex == startRow - 1);
+        }
+
     }
 }
