@@ -13,7 +13,7 @@ namespace ReversiKata.Tests
         public void NewGameBoardHasDefaultPieces()
         {
             var reversiBoard = new ReversiBoard();
-            for(var rowIndex = 0; rowIndex < 8; rowIndex++)
+            for (var rowIndex = 0; rowIndex < 8; rowIndex++)
             {
                 for (var colIndex = 0; colIndex < 8; colIndex++)
                 {
@@ -23,7 +23,7 @@ namespace ReversiKata.Tests
                         Assert.AreEqual(CellState.White, reversiBoard.m_Cells[rowIndex, colIndex]);
                     else
                         Assert.AreEqual(CellState.Empty, reversiBoard.m_Cells[rowIndex, colIndex]);
-                }     
+                }
             }
         }
 
@@ -38,9 +38,9 @@ namespace ReversiKata.Tests
 
             //act
             var validMoves = reversiBoard.GetValidMoves(ConsoleColor.White);
-            
+
             //assert
-            Assert.That(validMoves.Count == 1, "Expected one valid move to be returned for position {0},{1}, but found {2}", 
+            Assert.That(validMoves.Count == 1, "Expected one valid move to be returned for position {0},{1}, but found {2}",
                 coordinate.RowIndex, coordinate.ColumnIndex, validMoves.Count);
 
             Assert.That(validMoves[0].RowIndex == coordinate.RowIndex && validMoves[0].ColumnIndex == coordinate.ColumnIndex + 2);
@@ -104,9 +104,9 @@ namespace ReversiKata.Tests
         }
 
         [Test]
-        [TestCase(0,1,2)]
-        [TestCase(2,1,6)]
-        [TestCase(7,3,3)]
+        [TestCase(0, 1, 2)]
+        [TestCase(2, 1, 6)]
+        [TestCase(7, 3, 3)]
         public void AWhitePieceCanBePlacedToTheLeftOfMultipleBlackPiecesWithAWhiteAtTheEnd(int row, int startColumn, int runlength)
         {
             //setup
@@ -137,9 +137,6 @@ namespace ReversiKata.Tests
             for (var column = startColumn + 1; column < startColumn + runlength; column++)
                 reversiBoard.m_Cells[row, column] = CellState.Black;
 
-            for (int i = 0; i < 8; i++)
-                Console.WriteLine("Column {0} = {1}", i, reversiBoard.m_Cells[row, i]);
-            
             //act
             var validMoves = reversiBoard.GetValidMoves(ConsoleColor.White);
 
@@ -148,6 +145,50 @@ namespace ReversiKata.Tests
                 row, startColumn + runlength, validMoves.Count);
 
             Assert.That(validMoves[0].RowIndex == row && validMoves[0].ColumnIndex == startColumn + runlength);
+        }
+
+        [Test]
+        [TestCase(0, 1, 2)]
+        [TestCase(2, 1, 6)]
+        [TestCase(7, 3, 3)]
+        public void AWhitePieceCanBePlacedBelowMultipleBlackPiecesWithAWhiteAtTheTop(int column, int startRow, int runlength)
+        {
+            //setup
+            var reversiBoard = new ReversiBoard(false);
+            reversiBoard.m_Cells[startRow, column] = CellState.White;
+            for (var row = startRow + 1; row < startRow + runlength; row++)
+                reversiBoard.m_Cells[row, column] = CellState.Black;
+
+            //act
+            var validMoves = reversiBoard.GetValidMoves(ConsoleColor.White);
+
+            //assert
+            Assert.That(validMoves.Count == 1, "Expected one valid move to be returned for position {0},{1}, but found {2}",
+                startRow + runlength, column, validMoves.Count);
+
+            Assert.That(validMoves[0].ColumnIndex == column && validMoves[0].RowIndex == startRow + runlength);
+        }
+
+        [Test]
+        [TestCase(0, 1, 2)]
+        [TestCase(2, 1, 6)]
+        [TestCase(7, 3, 3)]
+        public void AWhitePieceCanBePlacedAboveMultipleBlackPiecesWithAWhiteAtTheBottom(int column, int startRow, int runlength)
+        {
+            //setup
+            var reversiBoard = new ReversiBoard(false);            
+            for (var row = startRow; row < startRow + runlength; row++)
+                reversiBoard.m_Cells[row, column] = CellState.Black;
+            reversiBoard.m_Cells[startRow + runlength, column] = CellState.White;
+
+            //act
+            var validMoves = reversiBoard.GetValidMoves(ConsoleColor.White);
+
+            //assert
+            Assert.That(validMoves.Count == 1, "Expected one valid move to be returned for position {0},{1}, but found {2}",
+                startRow -1, column, validMoves.Count);
+
+            Assert.That(validMoves[0].ColumnIndex == column && validMoves[0].RowIndex == startRow - 1);
         }
     }
 }
