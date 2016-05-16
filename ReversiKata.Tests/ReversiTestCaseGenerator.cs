@@ -34,7 +34,7 @@ namespace ReversiKata.Tests
             while (boardCount < 5)
             {
                 var startColumn = random.Next(4);
-                var runlength = random.Next(7 - startColumn - 1); //make sure run length doesn't go off the board
+                var runlength = random.Next(2, 7 - startColumn - 1); //make sure run length doesn't go off the board
                 var row = random.Next(7);
                 ReversiBoard reversiBoard = new ReversiBoard(false);
 
@@ -43,7 +43,7 @@ namespace ReversiKata.Tests
                 {
                     reversiBoard.m_Cells[row, column] = CellState.Black;
                 }
-                Console.WriteLine("Generated test row at {0} for {1} cells", startColumn, runlength);
+
                 boards[boardCount] = reversiBoard;
                 boardCount++;
             }
@@ -64,7 +64,7 @@ namespace ReversiKata.Tests
             while (boardCount < 5)
             {
                 var startRow = random.Next(4);
-                var runlength = random.Next(7 - startRow - 1); //make sure run length doesn't go off the board
+                var runlength = random.Next(2, 7 - startRow - 1); //make sure run length doesn't go off the board
                 var column = random.Next(7);
                 ReversiBoard reversiBoard = new ReversiBoard(false);
 
@@ -73,7 +73,7 @@ namespace ReversiKata.Tests
                 {
                     reversiBoard.m_Cells[row, column] = CellState.Black;
                 }
-                Console.WriteLine("Generated test column at {0} for {1} cells", startRow, runlength);
+                
                 boards[boardCount] = reversiBoard;
                 boardCount++;
             }

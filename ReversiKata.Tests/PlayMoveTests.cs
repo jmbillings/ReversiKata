@@ -45,7 +45,7 @@ namespace ReversiKata.Tests
                 var cellState = reversiBoard.m_Cells[startCell.RowIndex, column];
                 if (cellState != CellState.White)
                 {
-                    Assert.Fail("Unexpected cell state found at column {0} - {1}", column, cellState);
+                    Assert.Fail("Played cell {0},{1}. Unexpected cell state found at column {2} - {3}", playCell.RowIndex, playCell.ColumnIndex , column, cellState);
                 }
             }
         }
@@ -89,7 +89,7 @@ namespace ReversiKata.Tests
                 var cellState = reversiBoard.m_Cells[row, startCell.ColumnIndex];
                 if (cellState != CellState.White)
                 {
-                    Assert.Fail("Unexpected cell state found at row {0} - {1}", row, cellState);
+                    Assert.Fail("Played cell {0},{1}. Unexpected cell state found at row {2} - {3}", playCell.RowIndex, playCell.ColumnIndex, row, cellState);
                 }
             }
         }
