@@ -50,5 +50,37 @@ namespace ReversiKata.Tests
 
             return boards;
         }
+
+        /// <summary>
+        /// Gets 5 randomly placed vertical sets of white + n black cells
+        /// </summary>
+        /// <returns></returns>
+        internal static ReversiBoard[] GetBoardOfMultipleCellsVertically()
+        {
+            var boards = new ReversiBoard[5];
+            var boardCount = 0;
+            var random = new Random();
+
+            while (boardCount < 5)
+            {
+                var startRow = random.Next(4);
+                var runlength = random.Next(7 - startRow - 1); //make sure run length doesn't go off the board
+                var column = random.Next(7);
+                ReversiBoard reversiBoard = new ReversiBoard(false);
+
+                reversiBoard.m_Cells[startRow, column] = CellState.White;
+                for (var row = startRow + 1; row < startRow + runlength; row++)
+                {
+                    reversiBoard.m_Cells[row, column] = CellState.Black;
+                }
+                Console.WriteLine("Generated test column at {0} for {1} cells", startRow, runlength);
+                boards[boardCount] = reversiBoard;
+                boardCount++;
+            }
+
+            return boards;
+        }
+
+
     }
 }

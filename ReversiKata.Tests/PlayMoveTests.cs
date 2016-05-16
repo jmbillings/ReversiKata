@@ -50,9 +50,48 @@ namespace ReversiKata.Tests
             }
         }
 
-        public void WhenACellIsPlayedTheCorrectOpponentCellsInAColumnSwitchColor(int startRow, int runLength, ConsoleColor playedColor)
+        [TestCaseSource(typeof(ReversiTestCaseGenerator), nameof(ReversiTestCaseGenerator.GetBoardOfMultipleCellsVertically))]
+        public void WhenACellIsPlayedTheCorrectOpponentCellsInAColumnSwitchColor(ReversiBoard reversiBoard)
         {
+            ReversiGridCoordinate startCell = null;
+            //setup
+            for (var rowIndex = 0; rowIndex < 8; rowIndex++)
+            {
+                for (var columnIndex = 0; columnIndex < 8; columnIndex++)
+                {
+                    if (reversiBoard.m_Cells[rowIndex, columnIndex] == CellState.White)
+                    {
+                        Console.WriteLine("Found first white cell at {0},{1}", rowIndex, columnIndex);
+                        startCell = new ReversiGridCoordinate(rowIndex, columnIndex);
+                        break;
+                    }
+                }
+            }
 
+            ReversiGridCoordinate playCell = null;
+            var currentRow = startCell.RowIndex + 1;
+            while (playCell == null)
+            {
+                if (reversiBoard.m_Cells[currentRow, startCell.ColumnIndex] == CellState.Empty)
+                {
+                    playCell = new ReversiGridCoordinate(currentRow, startCell.ColumnIndex);
+                    break;
+                }
+                currentRow++;
+            }
+
+            //act
+            reversiBoard.PlayMove(CellState.White, playCell.RowIndex, playCell.ColumnIndex);
+
+            //assert 
+            for (var row = startCell.RowIndex + 1; row < playCell.RowIndex; row++)
+            {
+                var cellState = reversiBoard.m_Cells[row, startCell.ColumnIndex];
+                if (cellState != CellState.White)
+                {
+                    Assert.Fail("Unexpected cell state found at row {0} - {1}", row, cellState);
+                }
+            }
         }
 
         public void WhenACellIsPlayedTheCorrectOpponentCellsInTwoDirectionsSwitchColor(int startRow, int startColumn, int runLength, ConsoleColor playedColor)
