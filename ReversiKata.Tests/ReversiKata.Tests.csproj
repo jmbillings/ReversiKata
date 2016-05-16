@@ -44,9 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlackPlacementTests.cs" />
     <Compile Include="ReversiTestCaseGenerator.cs" />
     <Compile Include="ReversiTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WhitePlacementTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
