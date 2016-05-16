@@ -51,6 +51,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReversiBoard.cs" />
     <Compile Include="ReversiGridCoordinate.cs" />
+    <Compile Include="UIHelperMethods.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
