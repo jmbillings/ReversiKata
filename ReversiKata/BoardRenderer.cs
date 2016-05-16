@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReversiKata
 {
@@ -11,6 +6,7 @@ namespace ReversiKata
     {
         internal void RenderBoard(ReversiBoard reversiBoard)
         {
+            Console.Clear();
             for (int rowIndex = 0; rowIndex < 8; rowIndex++)
             {
                 if (rowIndex == 0)
@@ -42,7 +38,7 @@ namespace ReversiKata
                 }
                 Console.Write('\n');
             } 
-            Console.Write("\nEnter move as color,row,column (e.g. b,c,7) or 'x' to quit"); 
+            Console.WriteLine("\nEnter move as color,row,column (e.g. b,c,7) or 'x' to quit"); 
         }
     }
 }
