@@ -42,7 +42,7 @@ namespace ReversiKata
 
             if (validMove.Contains(true))
             {
-                m_ReversiBoard.m_Cells[selectedMove.RowIndex, selectedMove.ColumnIndex] = m_UiHelperMethods.GetCellStateForColor(selectedColor);
+                m_ReversiBoard.PlayMove(m_UiHelperMethods.GetCellStateForColor(selectedColor), selectedMove.RowIndex, selectedMove.ColumnIndex);
                 m_BoardRenderer.RenderBoard(m_ReversiBoard);
             }
             else

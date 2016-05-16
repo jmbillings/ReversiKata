@@ -32,6 +32,13 @@ namespace ReversiKata
             return validMoveCoordinates;
         }
 
+        public void PlayMove(CellState color, int rowIndex, int columnIndex)
+        {
+            //set the played cell
+            m_Cells[rowIndex, columnIndex] = color;
+
+        }
+
         private void PopulateDefaultGame()
         {
             m_Cells[3, 3] = CellState.Black;
