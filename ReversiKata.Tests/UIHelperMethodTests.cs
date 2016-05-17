@@ -36,7 +36,6 @@ namespace ReversiKata.Tests
         [TestCase(ConsoleColor.Black, CellState.Black)]
         [TestCase(ConsoleColor.Cyan, CellState.Empty)]
         [TestCase(ConsoleColor.DarkBlue, CellState.Empty)]
-        [TestCase(null, CellState.Empty)]
         public void GetCellStateForColor(ConsoleColor color, CellState expectedCellState)
         {
             Assert.AreEqual(expectedCellState, m_UiHelperMethods.GetCellStateForColor(color));
