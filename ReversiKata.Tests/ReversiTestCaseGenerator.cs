@@ -25,9 +25,9 @@ namespace ReversiKata.Tests
         /// Gets 5 randomly placed horizontal sets of white + n black cells
         /// </summary>
         /// <returns></returns>
-        internal static ReversiBoard[] GetBoardOfMultipleCellsHorizontally()
+        internal static ReversiBoardWithStartCellInfo[] GetBoardOfMultipleCellsHorizontally()
         {
-            var boards = new ReversiBoard[5];
+            var boards = new ReversiBoardWithStartCellInfo[5];
             var boardCount = 0;
             var random = new Random();
 
@@ -44,7 +44,7 @@ namespace ReversiKata.Tests
                     reversiBoard.m_Cells[row, column] = CellState.Black;
                 }
 
-                boards[boardCount] = reversiBoard;
+                boards[boardCount] = new ReversiBoardWithStartCellInfo(reversiBoard, new ReversiGridCoordinate(row, startColumn));
                 boardCount++;
             }
 
@@ -55,9 +55,9 @@ namespace ReversiKata.Tests
         /// Gets 5 randomly placed vertical sets of white + n black cells
         /// </summary>
         /// <returns></returns>
-        internal static ReversiBoard[] GetBoardOfMultipleCellsVertically()
+        internal static ReversiBoardWithStartCellInfo[] GetBoardOfMultipleCellsVertically()
         {
-            var boards = new ReversiBoard[5];
+            var boards = new ReversiBoardWithStartCellInfo[5];
             var boardCount = 0;
             var random = new Random();
 
@@ -73,8 +73,8 @@ namespace ReversiKata.Tests
                 {
                     reversiBoard.m_Cells[row, column] = CellState.Black;
                 }
-                
-                boards[boardCount] = reversiBoard;
+
+                boards[boardCount] = new ReversiBoardWithStartCellInfo(reversiBoard, new ReversiGridCoordinate(startRow, column));
                 boardCount++;
             }
 

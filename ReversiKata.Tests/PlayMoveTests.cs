@@ -7,27 +7,15 @@ namespace ReversiKata.Tests
     public class PlayMoveTests
     {
         [TestCaseSource(typeof(ReversiTestCaseGenerator), nameof(ReversiTestCaseGenerator.GetBoardOfMultipleCellsHorizontally))]
-        public void WhenACellIsPlayedTheCorrectOpponentCellsInARowSwitchColor(ReversiBoard reversiBoard)
+        public void WhenACellIsPlayedTheCorrectOpponentCellsInARowSwitchColor(ReversiBoardWithStartCellInfo reversiBoardInfo)
         {
-            ReversiGridCoordinate startCell = null;
-            //setup
-            for (var rowIndex = 0; rowIndex < 8; rowIndex++)
-            {
-                for (var columnIndex = 0; columnIndex < 8; columnIndex++)
-                {
-                    if (reversiBoard.m_Cells[rowIndex, columnIndex] == CellState.White)
-                    {
-                        startCell = new ReversiGridCoordinate(rowIndex, columnIndex);
-                        break;
-                    }
-                }
-            }
+            ReversiGridCoordinate startCell = reversiBoardInfo.StartCell;
 
             ReversiGridCoordinate playCell = null;
             var currentColumn = startCell.ColumnIndex + 1;
             while (playCell == null)
             {
-                if (reversiBoard.m_Cells[startCell.RowIndex, currentColumn] == CellState.Empty)
+                if (reversiBoardInfo.Board.m_Cells[startCell.RowIndex, currentColumn] == CellState.Empty)
                 {
                     playCell = new ReversiGridCoordinate(startCell.RowIndex, currentColumn);
                     break;
@@ -36,12 +24,12 @@ namespace ReversiKata.Tests
             }
 
             //act
-            reversiBoard.PlayMove(CellState.White, playCell.RowIndex, playCell.ColumnIndex);
+            reversiBoardInfo.Board.PlayMove(CellState.White, playCell.RowIndex, playCell.ColumnIndex);
 
             //assert 
             for(var column=startCell.ColumnIndex+1;column < playCell.ColumnIndex;column++)
             {
-                var cellState = reversiBoard.m_Cells[startCell.RowIndex, column];
+                var cellState = reversiBoardInfo.Board.m_Cells[startCell.RowIndex, column];
                 if (cellState != CellState.White)
                 {
                     Assert.Fail("Played cell {0},{1}. Unexpected cell state found at column {2} - {3}", playCell.RowIndex, playCell.ColumnIndex , column, cellState);
@@ -50,27 +38,16 @@ namespace ReversiKata.Tests
         }
 
         [TestCaseSource(typeof(ReversiTestCaseGenerator), nameof(ReversiTestCaseGenerator.GetBoardOfMultipleCellsVertically))]
-        public void WhenACellIsPlayedTheCorrectOpponentCellsInAColumnSwitchColor(ReversiBoard reversiBoard)
+        public void WhenACellIsPlayedTheCorrectOpponentCellsInAColumnSwitchColor(ReversiBoardWithStartCellInfo reversiBoardInfo)
         {
-            ReversiGridCoordinate startCell = null;
             //setup
-            for (var rowIndex = 0; rowIndex < 8; rowIndex++)
-            {
-                for (var columnIndex = 0; columnIndex < 8; columnIndex++)
-                {
-                    if (reversiBoard.m_Cells[rowIndex, columnIndex] == CellState.White)
-                    {
-                        startCell = new ReversiGridCoordinate(rowIndex, columnIndex);
-                        break;
-                    }
-                }
-            }
+            var startCell = reversiBoardInfo.StartCell;
 
             ReversiGridCoordinate playCell = null;
             var currentRow = startCell.RowIndex + 1;
             while (playCell == null)
             {
-                if (reversiBoard.m_Cells[currentRow, startCell.ColumnIndex] == CellState.Empty)
+                if (reversiBoardInfo.Board.m_Cells[currentRow, startCell.ColumnIndex] == CellState.Empty)
                 {
                     playCell = new ReversiGridCoordinate(currentRow, startCell.ColumnIndex);
                     break;
@@ -79,12 +56,12 @@ namespace ReversiKata.Tests
             }
 
             //act
-            reversiBoard.PlayMove(CellState.White, playCell.RowIndex, playCell.ColumnIndex);
+            reversiBoardInfo.Board.PlayMove(CellState.White, playCell.RowIndex, playCell.ColumnIndex);
 
             //assert 
             for (var row = startCell.RowIndex + 1; row < playCell.RowIndex; row++)
             {
-                var cellState = reversiBoard.m_Cells[row, startCell.ColumnIndex];
+                var cellState = reversiBoardInfo.Board.m_Cells[row, startCell.ColumnIndex];
                 if (cellState != CellState.White)
                 {
                     Assert.Fail("Played cell {0},{1}. Unexpected cell state found at row {2} - {3}", playCell.RowIndex, playCell.ColumnIndex, row, cellState);
