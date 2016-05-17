@@ -6,10 +6,15 @@ namespace ReversiKata
     class CellValidator
     {
         private CellState[,] m_Grid;
+        private bool m_PlayMove;
+        internal CellState[,] m_PlayedGrid;
 
-        internal bool IsCellValid(int rowIndex, int colIndex, CellState[,] reversiGrid, ConsoleColor color)
+        internal bool IsCellValid(int rowIndex, int colIndex, CellState[,] reversiGrid, ConsoleColor color, bool playMove = false)
         {
             m_Grid = reversiGrid;
+            m_PlayMove = playMove;
+            m_PlayedGrid = (CellState[,])m_Grid.Clone();
+
             var coordinate = new ReversiGridCoordinate(rowIndex, colIndex);
 
             //is cell empty?
@@ -141,16 +146,23 @@ namespace ReversiKata
             if (cells.Count == 0)
                 return false;
 
+            var cellsToFlip = new List<ReversiGridCoordinate>();
+
             if (color == ConsoleColor.Black)
             {
                 //next cell must be white
                 if (m_Grid[cells[0].RowIndex, cells[0].ColumnIndex] == CellState.White)
                 {
+                    cellsToFlip.Add(cells[0]);
+
                     //loop until we find another black
                     for (var cell = 1; cell < cells.Count; cell++)
                     {
+                        cellsToFlip.Add(cells[cell]);
                         if (m_Grid[cells[cell].RowIndex, cells[cell].ColumnIndex] == CellState.Black)
                         {
+                            if (m_PlayMove)
+                                FlipCells(cellsToFlip, CellState.Black);
                             return true;
                         }
                     }
@@ -162,17 +174,31 @@ namespace ReversiKata
                 //next cell must be black
                 if (m_Grid[cells[0].RowIndex, cells[0].ColumnIndex] == CellState.Black)
                 {
+                    cellsToFlip.Add(cells[0]);
+
                     //loop until we find another white
                     for (var cell = 1; cell < cells.Count; cell++)
                     {
+                        cellsToFlip.Add(cells[cell]);
+
                         if (m_Grid[cells[cell].RowIndex, cells[cell].ColumnIndex] == CellState.White)
                         {
+                            if (m_PlayMove)
+                                FlipCells(cellsToFlip, CellState.White);
                             return true;
                         }
                     }
                 }
                 return false;
             }
+        }
+
+        private void FlipCells(List<ReversiGridCoordinate> cells, CellState newState)
+        {
+            foreach (var cell in cells)
+            {
+                m_PlayedGrid[cell.RowIndex, cell.ColumnIndex] = newState;
+            }   
         }
     }
 }

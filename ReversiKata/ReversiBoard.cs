@@ -34,9 +34,11 @@ namespace ReversiKata
 
         public void PlayMove(CellState color, int rowIndex, int columnIndex)
         {
+            //update cells on board
+            new CellUpdater().UpdateCellsForMove(rowIndex,columnIndex, color, ref m_Cells);
+
             //set the played cell
             m_Cells[rowIndex, columnIndex] = color;
-
         }
 
         private void PopulateDefaultGame()

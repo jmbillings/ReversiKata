@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="BoardRenderer.cs" />
     <Compile Include="CellState.cs" />
+    <Compile Include="CellUpdater.cs" />
     <Compile Include="CellValidator.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="Program.cs" />
