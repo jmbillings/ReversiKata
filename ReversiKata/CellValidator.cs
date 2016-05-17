@@ -22,7 +22,11 @@ namespace ReversiKata
                 return false;
 
             //is there a valid sequence of cells from this position?
-            if ((IsCellValidHorizontally(coordinate, color)) || (IsCellValidVertically(coordinate, color)) || (IsCellValidDiagonally(coordinate, color)))
+            var validVertically = IsCellValidVertically(coordinate, color);
+            var validHorizontally = IsCellValidHorizontally(coordinate, color);
+            var validDiagonally = IsCellValidDiagonally(coordinate, color);
+
+            if (validVertically || validHorizontally || validDiagonally)
                 return true;
 
             return false;
