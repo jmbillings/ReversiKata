@@ -38,9 +38,9 @@ namespace ReversiKata
             var selectedMove = new ReversiGridCoordinate(m_UiHelperMethods.GetRowIndex(userInput[1]), m_UiHelperMethods.GetColumnIndex(userInput[2]));
             var selectedColor = m_UiHelperMethods.GetCellColorForLetter(userInput[0]);
             var validMoves = m_ReversiBoard.GetValidMoves(selectedColor);
-            var validMove = validMoves.Select(x => x.RowIndex == selectedMove.RowIndex && x.ColumnIndex == selectedMove.ColumnIndex);
-
-            if (validMove.Contains(true))
+            var validMove = validMoves.Where(x => x.RowIndex == selectedMove.RowIndex && x.ColumnIndex == selectedMove.ColumnIndex);
+            
+            if (validMove.Count() == 1)
             {
                 m_ReversiBoard.PlayMove(m_UiHelperMethods.GetCellStateForColor(selectedColor), selectedMove.RowIndex, selectedMove.ColumnIndex);
                 m_BoardRenderer.RenderBoard(m_ReversiBoard);
