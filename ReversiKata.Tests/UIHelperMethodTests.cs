@@ -49,6 +49,7 @@ namespace ReversiKata.Tests
         [TestCase("9",-1)]
         [TestCase("",-1)]
         [TestCase("100",-1)]
+        [TestCase("A", -1)]
         [Test]
         public void GetColumnIndexReturnsCorrectValue(string column, int expectedIndex)
         {

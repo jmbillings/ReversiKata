@@ -36,9 +36,14 @@ namespace ReversiKata
             if (!int.TryParse(column, out columnIndex))
             {
                 Console.WriteLine("Could not parse the column to a valid number");
-                return 99;
+                return -1;
             }
-            return columnIndex - 1;
+            columnIndex = columnIndex - 1;
+
+            if (columnIndex >= 0 && columnIndex <= 7)
+                return columnIndex;
+            else
+                return -1;
         }
 
         public int GetRowIndex(string row)
