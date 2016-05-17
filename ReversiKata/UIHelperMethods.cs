@@ -67,7 +67,7 @@ namespace ReversiKata
                 case "h":
                     return 7;
                 default:
-                    return 99;
+                    return -1;
             }
         }
     }

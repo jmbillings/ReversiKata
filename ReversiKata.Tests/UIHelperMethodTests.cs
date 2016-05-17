@@ -54,6 +54,26 @@ namespace ReversiKata.Tests
         public void GetColumnIndexReturnsCorrectValue(string column, int expectedIndex)
         {
             Assert.AreEqual(expectedIndex, m_UiHelperMethods.GetColumnIndex(column));   
-        } 
+        }
+
+        [Test]
+        [TestCase("a",0)]
+        [TestCase("A", 0)]
+        [TestCase("b", 1)]
+        [TestCase("B", 1)]
+        [TestCase("c", 2)]
+        [TestCase("d", 3)]
+        [TestCase("e", 4)]
+        [TestCase("f", 5)]
+        [TestCase("g", 6)]
+        [TestCase("h", 7)]
+        [TestCase("H", 7)]
+        [TestCase("", -1)]
+        [TestCase("i", -1)]
+        [TestCase("zzz", -1)]
+        public void GetRowIndexReturnsCorrectValue(string row, int expectedIndex)
+        {
+            Assert.AreEqual(expectedIndex, m_UiHelperMethods.GetRowIndex(row));
+        }
     }
 }
