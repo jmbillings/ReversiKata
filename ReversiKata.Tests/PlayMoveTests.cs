@@ -99,9 +99,45 @@ namespace ReversiKata.Tests
             }
         }
 
-        public void WhenACellIsPlayedTheCorrectOpponentCellsInThreeDirectionsSwitchColor(int startRow, int startColumn, int runLength, ConsoleColor playedColor)
-        {
 
+        [TestCaseSource(typeof(ReversiTestCaseGenerator), nameof(ReversiTestCaseGenerator.GetBoardOfMultipleCellsVerticallyHorizontallyAndDiagonally))]
+        public void WhenACellIsPlayedTheCorrectOpponentCellsInThreeDirectionsSwitchColor(ReversiBoardWithStartCellInfo reversiBoardInfo)
+        {
+            //setup
+            var startCell = reversiBoardInfo.StartCell;
+            var reversiBoard = reversiBoardInfo.Board;
+
+            //act
+            reversiBoard.PlayMove(CellState.White, startCell.RowIndex, startCell.ColumnIndex);
+
+            //assert
+            var column = startCell.ColumnIndex + 1;
+            while (reversiBoard.m_Cells[startCell.RowIndex, column] != CellState.Empty)
+            {
+                if (reversiBoard.m_Cells[startCell.RowIndex, column] == CellState.Black)
+                    Assert.Fail("Unexpected black cell found while checking horizontal cells at {0},{1}",
+                        startCell.RowIndex, column);
+                column++;
+            }
+
+            var row = startCell.RowIndex + 1;
+            while (reversiBoard.m_Cells[row, startCell.ColumnIndex] != CellState.Empty)
+            {
+                if (reversiBoard.m_Cells[row, startCell.ColumnIndex] == CellState.Black)
+                    Assert.Fail("Unexpected black cell found while checking vertical cells at {0},{1}", row,
+                        startCell.ColumnIndex);
+                row++;
+            }
+
+            row = startCell.RowIndex + 1;
+            column = startCell.ColumnIndex + 1;
+            while (reversiBoard.m_Cells[row, column] != CellState.Empty)
+            {
+                if (reversiBoard.m_Cells[row, column] == CellState.Black)
+                    Assert.Fail("Unexpected black cell found while checking diagonal cells at {0},{1}", row, column);
+                row++;
+                column++;
+            }
         }
     }
 }
