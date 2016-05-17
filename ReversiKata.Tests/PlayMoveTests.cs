@@ -17,7 +17,6 @@ namespace ReversiKata.Tests
                 {
                     if (reversiBoard.m_Cells[rowIndex, columnIndex] == CellState.White)
                     {
-                        Console.WriteLine("Found first white cell at {0},{1}", rowIndex, columnIndex);
                         startCell = new ReversiGridCoordinate(rowIndex, columnIndex);
                         break;
                     }
@@ -61,7 +60,6 @@ namespace ReversiKata.Tests
                 {
                     if (reversiBoard.m_Cells[rowIndex, columnIndex] == CellState.White)
                     {
-                        Console.WriteLine("Found first white cell at {0},{1}", rowIndex, columnIndex);
                         startCell = new ReversiGridCoordinate(rowIndex, columnIndex);
                         break;
                     }
