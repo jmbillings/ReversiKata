@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="BlackPlacementTests.cs" />
     <Compile Include="PlayMoveTests.cs" />
+    <Compile Include="ReversiBoardWithStartCellInfo.cs" />
     <Compile Include="ReversiTestCaseGenerator.cs" />
     <Compile Include="ReversiTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
