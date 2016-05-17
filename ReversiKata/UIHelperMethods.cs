@@ -6,7 +6,7 @@ namespace ReversiKata
     {
         public ConsoleColor GetCellColorForLetter(string letter)
         {
-            switch (letter)
+            switch (letter.ToLower())
             {
                 case "w":
                     return ConsoleColor.White;
