@@ -2,9 +2,9 @@
 
 namespace ReversiKata
 {
-    class UIHelperMethods
+    public class UIHelperMethods
     {
-        internal ConsoleColor GetCellColorForLetter(string letter)
+        public ConsoleColor GetCellColorForLetter(string letter)
         {
             switch (letter)
             {
@@ -17,7 +17,7 @@ namespace ReversiKata
             return ConsoleColor.Red;
         }
 
-        internal CellState GetCellStateForColor(ConsoleColor color)
+        public CellState GetCellStateForColor(ConsoleColor color)
         {
             switch (color)
             {
@@ -30,7 +30,7 @@ namespace ReversiKata
             return CellState.Empty;
         }
 
-        internal int GetColumnIndex(string column)
+        public int GetColumnIndex(string column)
         {
             int columnIndex;
             if (!int.TryParse(column, out columnIndex))
@@ -41,7 +41,7 @@ namespace ReversiKata
             return columnIndex - 1;
         }
 
-        internal int GetRowIndex(string row)
+        public int GetRowIndex(string row)
         {
             switch (row.ToLower())
             {
